@@ -91,14 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             img: 'assets/img/kangaroo.png'
         },
         {
-            name: 'leaf',
-            img: 'assets/img/leaf.png'
-        },
-        {
-            name: 'leaf',
-            img: 'assets/img/leaf.png'
-        },
-        {
             name: 'monkey',
             img: 'assets/img/monkey.png'
         },
@@ -123,28 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
             img: 'assets/img/parfum.png'
         },
         {
-            name: 'plane',
-            img: 'assets/img/plane.png'
-        },
-        {
-            name: 'plane',
-            img: 'assets/img/plane.png'
-        },
-        {
             name: 'queen',
             img: 'assets/img/queen.png'
         },
         {
             name: 'queen',
             img: 'assets/img/queen.png'
-        },
-        {
-            name: 'ring',
-            img: 'assets/img/ring.png'
-        },
-        {
-            name: 'ring',
-            img: 'assets/img/ring.png'
         },
         {
             name: 'snowman',
@@ -193,15 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             name: 'yatch',
             img: 'assets/img/yatch.png'
-        },
-        {
-            name: 'zebra',
-            img: 'assets/img/zebra.png'
-        },
-        {
-            name: 'zebra',
-            img: 'assets/img/zebra.png'
-        },
+        }
     ]
 
     CARDARRAY.sort(() => 0.5 - Math.random());
@@ -210,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const RESULTDISPLAY = document.querySelector('#result');
     let cardsChosen = [];
     let cardsChosenId = [];
+    const CARDSWON = [];
 
     //create board
     function createBoard() {
@@ -227,21 +196,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let cards = document.querySelectorAll('img');
         const OPTIONONEID = cardsChosenId[0];
         const OPTIONTWOID = cardsChosenId[1];
-        if (cardsChosen[0] === cardsChosen[1]) {
-            alert('that\'s a match');
+
+        if (OPTIONONEID == OPTIONTWOID) {
+            cards[OPTIONONEID].setAttribute('src', 'assets/img/card.png');
+            cards[OPTIONTWOID].setAttribute('src', 'assets/img/card.png');
+        } else if (cardsChosen[0] === cardsChosen[1]) {
             cards[OPTIONONEID].setAttribute('src', 'assets/img/blank.png');
             cards[OPTIONTWOID].setAttribute('src', 'assets/img/blank.png');
-            cardsWon.push(cardsChosen);
+            cards[OPTIONONEID].removeEventListener('click', flipCard);
+            cards[OPTIONTWOID].removeEventListener('click', flipCard);
+            CARDSWON.push(cardsChosen);
         } else {
             cards[OPTIONONEID].setAttribute('src', 'assets/img/card.png');
             cards[OPTIONTWOID].setAttribute('src', 'assets/img/card.png');
-            alert('try again');
         }
 
         cardsChosen = [];
         cardsChosenId = [];
-        RESULTDISPLAY.textContent = cardsWon.length;
-        if (cardsWon.length === CARDARRAY.length/2) {
+        RESULTDISPLAY.textContent = CARDSWON.length;
+        if (CARDSWON.length === CARDARRAY.length/2) {
             RESULTDISPLAY.textContent = 'Atta boy!';
         }
     }
